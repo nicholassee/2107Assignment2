@@ -7,11 +7,17 @@ import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
 
+/*
+ * Contributor: Leonard Yeo (14SIC082T)
+ * */
 public class TaskNineReducer extends Reducer<Text, IntWritable, Text, IntWritable>{
 	
 	IntWritable totalIW=new IntWritable();
 	private TreeMap<Integer,Text>sortedMap= new TreeMap<Integer,Text>();
 	
+	/*
+	 * function to iterate through values that is associated with the key (Airline name + Sentiment word)
+	 * */
 	@Override
 	protected void reduce(Text key, Iterable<IntWritable> values, Reducer<Text, IntWritable, Text, IntWritable>.Context context)
 			throws IOException, InterruptedException {
@@ -28,6 +34,10 @@ public class TaskNineReducer extends Reducer<Text, IntWritable, Text, IntWritabl
 		
 	}
 	
+	/*
+	 * Cleanup to sort the keys by descending order
+	 * write into context the value based on the sorted key
+	 * */
 	@Override
 	protected void cleanup(Context context)
 		throws IOException,InterruptedException{

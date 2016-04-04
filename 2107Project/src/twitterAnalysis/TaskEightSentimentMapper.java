@@ -9,10 +9,14 @@ import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.conf.Configuration;
 
+/*
+ * Contributor: Leonard Yeo (14SIC082T)
+ * */
 public class TaskEightSentimentMapper extends Mapper<Text, Text, Text, IntWritable>{
 	
 	SentiWordNet sentiwordnet;
 	String[] dictionary = {"neutral", "very happy", "happy", "somewhat happy", "somewhat sad", "sad", "very sad"};
+	
 	
 	@Override
 	protected void setup(Mapper<Text, Text, Text, IntWritable>.Context context) throws IOException, InterruptedException{
