@@ -1,3 +1,4 @@
+//Created by Chong Hiu Fung
 package twitterAnalysis;
 
 import java.io.IOException;
@@ -9,6 +10,7 @@ import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.mapreduce.Reducer.Context;
 
 public class task4DReducer extends Reducer<Text,IntWritable,Text,IntWritable>{
+	
 	IntWritable totalIW=new IntWritable();
 	private TreeMap<Integer,Text>sortedMap= new TreeMap<Integer,Text>();		
 	@Override
