@@ -12,6 +12,7 @@ public class TempBonusTaskTwo implements Comparable<TempBonusTaskTwo>{
 		this.tweetsList = tweetsList;
 	}
 	
+	//iterator comparator so that the list knows to compare the tweetsize instead.
 	@Override
 	public int compareTo(TempBonusTaskTwo o)
 	{
@@ -24,7 +25,7 @@ public class TempBonusTaskTwo implements Comparable<TempBonusTaskTwo>{
 	
 	public static class Comparators{
 		
-		public static Comparator<TempBonusTaskTwo> USERCOUNT = new Comparator<TempBonusTaskTwo>()
+		public static Comparator<TempBonusTaskTwo> TWEETLISTCOUNT = new Comparator<TempBonusTaskTwo>()
 				{
 					@Override
 					public int compare(TempBonusTaskTwo o1, TempBonusTaskTwo o2)

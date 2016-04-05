@@ -15,9 +15,9 @@ import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 
 public class BonusTaskMapper extends Mapper<LongWritable, Text, Text, Text>{
-	Hashtable<String, String> countryCodes = new Hashtable<>();
-	String[] dayList = {"Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"};
-	String[] timeCategoryList = {"12AM to 6AM","6AM to 12PM", "12PM to 6PM","6pm to 12AM"} ;
+	Hashtable<String, String> countryCodes = new Hashtable<>();//hashmap for the purpose of Mapper side join.
+	String[] dayList = {"Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"};//list of the days  from sunday to monday for use with date.getDay()
+	String[] timeCategoryList = {"12AM to 6AM","6AM to 12PM", "12PM to 6PM","6pm to 12AM"} ;//category that is created for time.
 	@Override
 	protected void setup(Mapper<LongWritable, Text, Text, Text>.Context context)
 			throws IOException, InterruptedException {
@@ -25,6 +25,8 @@ public class BonusTaskMapper extends Mapper<LongWritable, Text, Text, Text>{
 		// so we can access to it here locally by its name
 		BufferedReader br = new BufferedReader(new FileReader("ISO-3166-alpha3.tsv"));
 		String line = null;
+		
+		//init the countryCode list so that we can perform a mapper side join
 		while (true) {
 			line = br.readLine();
 			if (line != null) {
@@ -39,12 +41,14 @@ public class BonusTaskMapper extends Mapper<LongWritable, Text, Text, Text>{
 	@Override
 	protected void map(LongWritable key, Text value, Mapper<LongWritable, Text, Text, Text>.Context context)
 			throws IOException, InterruptedException {	
+		// perform splitting and getting of the respective variables
 		String[] parts = value.toString().split(",");
 		String airline = parts[16];
 		String countryCode = parts[10];
 		String tweet = parts[21];
 		String tweetCreated = parts[23];
 		
+		//format the date and attempt to resolve it , throws exception if there is an error
 	    DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:MM"); 
 	    Date date;
 	    try {
@@ -54,10 +58,14 @@ public class BonusTaskMapper extends Mapper<LongWritable, Text, Text, Text>{
 	        int hour = date.getHours();
 	        int TimeCategory = hour/6;
 	        
+			//verifys that the columns are not empty
 	        if(!airline.equals("") && !tweet.equals("") && !countryCode.equals(""))
 			{
+				//perform mapper side join to replace country code with country
 				String countryName = countryCodes.get(countryCode);
 				if (countryName != null) {
+					//verify that the tweet contains a delay , if not put none as the key value
+					//Key is using a combination of airline , country name , day of the week , and time category.
 					if(tweet.toLowerCase().contains("delay"))
 					{
 						context.write(new Text(airline+"\t"+countryName+"\t"+dayList[day]+"\t"+timeCategoryList[TimeCategory]), new Text("delay"));

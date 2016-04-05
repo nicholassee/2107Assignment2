@@ -11,9 +11,11 @@ public class Temp implements Comparable<Temp>{
 		this.key = key;
 		this.delayCount = delayCount;
 		this.totalCount = totalCount;
-		this.probability = (double)delayCount/totalCount;
+		this.probability = (double)delayCount/totalCount;//probability count is noted by doing a delay count divided by the total count which tells us how many delays against total.
 	}
 	
+	
+	//allows the comparison of probability instead.
 	@Override
 	public int compareTo(Temp o)
 	{
