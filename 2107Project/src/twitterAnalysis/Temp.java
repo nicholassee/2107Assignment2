@@ -1,3 +1,7 @@
+/*
+*Author : Benjamin Kuah
+*/
+
 package twitterAnalysis;
 
 import java.util.Comparator;
