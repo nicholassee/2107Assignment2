@@ -10,6 +10,9 @@ import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.conf.Configuration;
 
+/*
+ * Contributor: Leonard Yeo (14SIC082T)
+ * */
 public class TaskNineSentimentMapper extends Mapper<Text, Text, Text, IntWritable>{
 	
 	SentiWordNet sentiwordnet;
@@ -19,8 +22,6 @@ public class TaskNineSentimentMapper extends Mapper<Text, Text, Text, IntWritabl
 	protected void setup(Mapper<Text, Text, Text, IntWritable>.Context context) throws IOException, InterruptedException{
 		URI[] conf = context.getCacheFiles(); //get the URI from the file that was created from TaskEight.java 
 		sentiwordnet = new SentiWordNet(conf[0]); //creates a dictionary of words with their values
-		
-		
 	}
 	
 	
@@ -92,6 +93,9 @@ public class TaskNineSentimentMapper extends Mapper<Text, Text, Text, IntWritabl
 			}
 	}
 	
+	/*
+	 * Custom algorithm to analyse the true sentiment value
+	 * */
 	public double TrustAlgorithm(String sentiment, double sentimentValue, double trust){
 		
 		double TruePositive = 0.0;

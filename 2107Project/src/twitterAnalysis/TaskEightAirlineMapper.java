@@ -8,6 +8,9 @@ import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 
+/*
+ * Contributor: Leonard Yeo (14SIC082T)
+ * */
 public class TaskEightAirlineMapper extends Mapper<LongWritable, Text, Text, Text>{
 	
 	/*
