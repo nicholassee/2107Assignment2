@@ -46,11 +46,9 @@ public class task3DMapper extends Mapper<LongWritable,Text,Text,IntWritable>{
 			throws IOException,InterruptedException{
 			//read one row and split by column
 			String[] parts = value.toString().split(",");
-			//get negative reason from column 15
+			//get negative reason from column 15 , get airline from column 16 and get country code from column 10
 			String negtivereason = parts[15];
-			//get airline from column 16
 			String airline = parts[16];
-			//get country code from column 10
 			String countryCode = parts[10];
 			//check if each column is not null
 			if(airline!=null && negtivereason!=null&&countryCode!=null){
@@ -61,7 +59,8 @@ public class task3DMapper extends Mapper<LongWritable,Text,Text,IntWritable>{
 					if(countryName != null && !countryName.isEmpty()){
 						//form the new key value
 						String str = countryName+" "+airline+" "+negtivereason;
-						//write for reducer to use
+						//create new key value pair that which key is consist of country name , airline and negative reason and its value is one
+						//and read to context
 						context.write(new Text(str),one);
 					}
 				}

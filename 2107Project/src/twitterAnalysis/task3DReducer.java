@@ -1,4 +1,4 @@
-//Created Chong Hiu Fung
+//Created by Chong Hiu Fung
 package twitterAnalysis;
 
 import java.io.IOException;
